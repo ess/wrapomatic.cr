@@ -4,7 +4,9 @@ module Wrapomatic
       class Base
         getter :text, :columns
 
-        def initialize(@text, @columns)
+        @processed : String?
+
+        def initialize(@text : String, @columns : Int32)
         end
 
         def content

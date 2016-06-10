@@ -1,11 +1,10 @@
-require "wrapomatic/line"
+require "./line"
 
 module Wrapomatic
   class Wrapper
     getter :text, :lines, :indents, :columns
 
-    def initialize(text, indents = 0, columns = 80)
-      @text, @indents, @columns = text, indents, columns
+    def initialize(@text = String.new, @indents = 0, @columns = 80)
       @lines = [] of String
       spit_some_mad_fire
     end

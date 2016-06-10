@@ -1,4 +1,4 @@
-require "wrapomatic/line/processor/base"
+require "./base"
 
 module Wrapomatic
   class Line
@@ -9,11 +9,16 @@ module Wrapomatic
         end
 
         private def primary_part
-          text.slice(0..line_break).rstrip
+          text[0..line_break].rstrip
         end
 
         private def last_leading_whitespace
-          [0, text.index(/[^\s]/).to_i - 1].max
+          [0, (text.scan(/[^\s]/).first.begin || 0) - 1].max
+        end
+
+        private def first_non_whitespace
+          result = text.scan(/[^\s]/)
+          return 0 if result.empty?
         end
 
         private def line_break
@@ -26,7 +31,14 @@ module Wrapomatic
         end
 
         private def breaking_whitespace
-          text.rindex(/(\s|-)/, columns).to_i
+          prospects = text.scan(/(\s|-)/).map {|match| match.begin.not_nil!}
+
+          return columns  if prospects.empty?
+
+          candidates = prospects.select {|index| index <= columns}
+
+          return columns if candidates.empty?
+          candidates.last
         end
       end
     end

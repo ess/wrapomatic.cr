@@ -1,17 +1,20 @@
-require "wrapomatic/line/processor"
+require "./line/processor"
 
 module Wrapomatic
   class Line
     INDENTATION = "  "
 
+
     getter :original, :indents, :columns
 
-    def initialize(@original, @indents, @columns)
+    def initialize(@original = String.new, @indents = 0, @columns = 80)
       raise ArgumentError.new("original may not contain newline") if contains_newline?
+      @wrapped = [] of String
     end
 
     def wrapped
-      @wrapped ||= indented.length <= columns ? [indented] : Processor.process(self)
+      return @wrapped unless @wrapped.empty?
+      @wrapped = indented.size <= columns ? [indented] : Processor.process(self)
     end
 
     def indented
@@ -19,7 +22,7 @@ module Wrapomatic
     end
 
     private def contains_newline?
-      original.chars.include?("\n")
+      original.chars.includes?("\n")
     end
   end
 end

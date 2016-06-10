@@ -1,5 +1,5 @@
-require "wrapomatic/line/processor/primary"
-require "wrapomatic/line/processor/remainder"
+require "./processor/primary"
+require "./processor/remainder"
 
 module Wrapomatic
   class Line
