@@ -1,0 +1,12 @@
+name: wrapomatic
+version: 0.1.0
+
+authors:
+  - Dennis Walters <dwalters@engineyard.com>
+
+license: MIT
+
+development_dependencies:
+  minitest:
+    git: https://github.com/ysbaddaden/minitest.cr.git
+    version: ~> 0.3.4
